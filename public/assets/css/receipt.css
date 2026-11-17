@@ -1,0 +1,56 @@
+/* Receipt / label / document print styles. Printer-safe fonts, black only. */
+@font-face { font-family: "Inter"; src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Noto Sans Tamil"; src: url("../fonts/noto-sans-tamil-tamil-wght-normal.woff2") format("woff2"); font-weight: 100 900; unicode-range: U+0B80-0BFF; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Inter", "Noto Sans Tamil", Arial, sans-serif; color: #000; background: #F1F5F9; }
+.toolbar { background: #0F172A; color: #CBD5E1; padding: 8px 12px; font-size: 13px; display: flex; gap: 10px; align-items: center; }
+.toolbar a { color: #93C5FD; } .toolbar button { font: inherit; padding: 4px 12px; border-radius: 6px; border: 0; background: #2563EB; color: #fff; cursor: pointer; }
+.receipt { background: #fff; margin: 12px auto; }
+.sub { font-size: .85em; color: #333; }
+.l { text-align: left !important; }
+
+/* ---- 80 mm thermal (≈72 mm printable) */
+body.thermal .receipt { width: 72mm; padding: 2mm 1mm; font-size: 11.5px; line-height: 1.3; }
+.r-head { text-align: center; border-bottom: 1px dashed #000; padding-bottom: 4px; margin-bottom: 4px; }
+.r-shop { font-size: 1.35em; font-weight: 800; }
+.r-title { font-weight: 800; margin-top: 4px; letter-spacing: .05em; }
+.r-meta div { display: flex; gap: 6px; } .r-meta span { min-width: 64px; color: #333; }
+.r-meta { border-bottom: 1px dashed #000; padding-bottom: 4px; margin-bottom: 4px; }
+table { width: 100%; border-collapse: collapse; }
+.r-items th { font-size: .85em; border-bottom: 1px solid #000; text-align: right; padding: 2px 1px; }
+.r-items td { text-align: right; padding: 3px 1px; vertical-align: top; border-bottom: 1px dotted #999; white-space: nowrap; }
+.r-items td.l { white-space: normal; }
+.r-items th + th, .r-items td + td { padding-left: 6px; }
+.r-totals, .r-pay { border-top: 1px dashed #000; margin-top: 4px; padding-top: 4px; }
+.r-totals div, .r-pay div { display: flex; justify-content: space-between; }
+.r-totals .grand { font-size: 1.45em; font-weight: 800; border-top: 1px solid #000; margin-top: 3px; padding-top: 3px; }
+.r-tax { margin-top: 4px; font-size: .85em; } .r-tax th, .r-tax td { text-align: right; padding: 1px; } .r-tax th:first-child, .r-tax td:first-child { text-align: left; }
+.r-barcode { text-align: center; margin: 6px 0 2px; } .r-barcode svg { max-width: 100%; height: auto; }
+.r-note { font-size: .85em; text-align: center; margin-top: 4px; }
+.r-foot { text-align: center; font-weight: 600; border-top: 1px dashed #000; margin-top: 6px; padding-top: 4px; }
+
+/* ---- A4 */
+body.a4 .receipt { width: 190mm; min-height: 270mm; padding: 10mm; font-size: 12.5px; box-shadow: 0 2px 10px rgba(0, 0, 0, .1); }
+body.a4 .r-head { text-align: left; border-bottom: 2px solid #000; }
+body.a4 .r-shop { font-size: 22px; }
+body.a4 .r-title { font-size: 15px; }
+body.a4 .r-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 20px; }
+body.a4 .r-items th, body.a4 .r-items td { padding: 5px 6px; }
+body.a4 .r-items th { background: #F1F5F9; }
+body.a4 .r-totals { width: 45%; margin-left: auto; }
+body.a4 .r-tax { width: 60%; }
+
+/* ---- labels */
+.labels { display: grid; gap: 2mm; padding: 4mm; background: #fff; }
+.label { border: 1px dashed #bbb; padding: 1.5mm; overflow: hidden; text-align: center; font-size: 9px; line-height: 1.15; page-break-inside: avoid; }
+.label .ln { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.label .lp { font-size: 12px; font-weight: 800; }
+.label svg { width: 100%; height: auto; max-height: 60%; }
+
+@media print {
+  body { background: #fff; } .no-print { display: none !important; }
+  .receipt { margin: 0; box-shadow: none !important; }
+  body.thermal { width: 72mm; } @page { margin: 2mm; }
+  body.a4 .receipt { width: auto; min-height: 0; padding: 0; }
+  .label { border-color: transparent; }
+}

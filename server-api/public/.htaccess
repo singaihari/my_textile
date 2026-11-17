@@ -1,0 +1,11 @@
+Options -Indexes
+# The project root denies everything; only this public folder of the sync API is reachable.
+<IfModule mod_authz_core.c>
+    Require all granted
+</IfModule>
+RewriteEngine On
+# Pass the Authorization header through to PHP (needed on some Apache/CGI setups)
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

@@ -1,0 +1,6 @@
+<div class="page-head"><form class="filters grow" method="get"><div class="searchbar"><?= icon('search') ?><input class="input" name="action" value="<?= e(request()->query('action', '')) ?>" placeholder="Action prefix, e.g. sale. / auth. / stock. / sync." data-page-search></div><button class="btn">Filter</button></form>
+  <span class="muted small">Append-only: entries cannot be edited or deleted (enforced by the database).</span></div>
+<div class="card"><div class="table-wrap"><table class="table table-compact"><thead><tr><th>When</th><th>User</th><th>Action</th><th>Entity</th><th>Details</th><th>IP</th></tr></thead><tbody>
+<?php foreach ($page['rows'] as $a): ?><tr><td class="nowrap"><?= e(fmt_date($a['created_at'])) ?></td><td><?= e($a['full_name'] ?? '—') ?></td><td><span class="badge plain <?= str_contains($a['action'], 'denied') || str_contains($a['action'], 'failed') ? 'badge-danger' : '' ?>"><?= e($a['action']) ?></span></td>
+  <td class="mono small"><?= e($a['entity_type']) ?> <?= e(substr((string)$a['entity_id'], 0, 13)) ?></td><td class="mono small" style="max-width:420px;word-break:break-all"><?= e($a['details']) ?></td><td class="small"><?= e($a['ip']) ?></td></tr><?php endforeach; ?>
+</tbody></table></div><?= App\Core\View::partial('partials/pager', ['page' => $page]) ?></div>

@@ -1,0 +1,14 @@
+.env
+server-api/.env
+storage/sqlite/*
+storage/backups/*
+storage/logs/*
+storage/sessions/*
+storage/tmp/*
+storage/attachments/*
+server-api/storage/*
+!storage/**/.gitkeep
+vendor/
+node_modules/
+tests/E2E/node_modules/
+tests/E2E/*.png
